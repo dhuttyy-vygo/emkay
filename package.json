@@ -1,0 +1,34 @@
+{
+  "name": "wf-ep-js-project",
+  "version": "1.0.0",
+  "description": "A modular JavaScript project using GSAP, Lenis, and Swiper, bundled with Parcel.",
+  "main": "dist/app.js",
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "split-type": "^0.3.4"
+  },
+  "devDependencies": {
+    "parcel": "^2.13.2"
+  },
+  "scripts": {
+  "dev": "parcel src/app.js src/swiperapp.js",
+  "build": "npm run build:app && npm run build:swiperapp",
+  "build:app": "parcel build src/app.js --dist-dir dist/app --public-url ./",
+  "build:swiperapp": "parcel build src/swiperapp.js --dist-dir dist/swiperapp --public-url ./"
+},
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ],
+  "keywords": [
+    "webflow",
+    "gsap",
+    "parcel",
+    "swiper",
+    "lenis",
+    "javascript"
+  ],
+  "author": "Dominic Hutson",
+  "license": "MIT"
+}

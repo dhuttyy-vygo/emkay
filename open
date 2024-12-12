@@ -1,0 +1,14 @@
+So we have both css and gsap to trigger page-load animations
+
+
+[data-hero] is the parent to wrap - set attribute then adds [data-state=activated] on page-load from /app.js
+
+
+
+we have a [data-split=lines] - to text-split and add a .line-in class. [data-animation=fade-in-up]
+
+
+
+.side-nav w--current
+
+.siide-nav-dot 
