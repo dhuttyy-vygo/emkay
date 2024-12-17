@@ -6998,8 +6998,15 @@ function contactModal() {
     backdrop.addEventListener("click", hide);
 }
 function requestQuoteModal() {
-    const openBtn = document.querySelectorAll("[sample-menu-open]"), backdrop = document.getElementById("sample-backdrop"), backdropBackground = document.querySelector(".ep-sample-backdrop"), closeBtn = document.getElementById("close-contact"), menuContent = document.getElementById("sample-menu-box"), menu = document.querySelector(".ep-sample-modal");
+    const openBtn = document.querySelectorAll("[sample-menu-open]"), backdrop = document.getElementById("sample-backdrop"), backdropBackground = document.querySelector(".ep-sample-backdrop"), closeBtn = document.getElementById("close-sample"), menuContent = document.getElementById("sample-menu-box"), menu = document.querySelector(".ep-sample-modal");
     let opened = false;
+    // Select all input elements inside .check .link
+    document.querySelectorAll(".check .link input").forEach((input)=>{
+        input.addEventListener("change", function() {
+            // Find the closest parent with class 'link' and toggle 'selected-toggle'
+            this.closest(".link").classList.toggle("selected-toggle");
+        });
+    });
     // Qe.set(menu, { autoAlpha: 0 });
     const tlShow = Qe.timeline({
         paused: true

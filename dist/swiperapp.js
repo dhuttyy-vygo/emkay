@@ -596,8 +596,6 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"kSDmC":[function(require,module,exports,__globalThis) {
-// import "swiper/swiper-bundle.css";// Import Swiper and its CSS
-// import Swiper from "swiper";
 document.addEventListener("DOMContentLoaded", ()=>{
     // Dynamically append Swiper controls
     $("[swiper-data-scrollbar]").append(`<div class="swiper-scrollbar"></div>`);
