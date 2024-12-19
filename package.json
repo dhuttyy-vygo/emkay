@@ -11,11 +11,9 @@
     "parcel": "^2.13.2"
   },
   "scripts": {
-  "dev": "parcel src/app.js src/swiperapp.js",
-  "build": "npm run build:app && npm run build:swiperapp",
-  "build:app": "parcel build src/app.js --dist-dir dist/app --public-url ./",
-  "build:swiperapp": "parcel build src/swiperapp.js --dist-dir dist/swiperapp --public-url ./"
-},
+    "dev": "parcel src/app.js",
+    "build": "parcel build src/app.js --dist-dir dist --public-url ./ --no-scope-hoist --no-content-hash"
+  },
   "browserslist": [
     "defaults",
     "not IE 11",

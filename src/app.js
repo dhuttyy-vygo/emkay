@@ -6,9 +6,11 @@ import { initFAQAccordion } from "./modules/faqs.js";
 import { filterCollection } from "./modules/filterCms.js";
 import { productHover } from "./modules/cmsText.js";
 import { initPageFadeIn } from "./modules/load.js";
+import { initDocSideNav } from "./modules/docSidenav.js";
 
 // Initialize global features
 document.addEventListener("DOMContentLoaded", () => {
+    // Always run these global features
     Animations.initPageAnimations();
     contactModal();
     initPageFadeIn();
@@ -16,21 +18,19 @@ document.addEventListener("DOMContentLoaded", () => {
     textHighlight();
     animateNav();
     mobileHamburger();
+    initDocSideNav();
+
+    // Conditionally initialize features based on presence of specific elements
+    if (document.querySelector(".ep-product-card")) {
+        productHover();
+    }
+
+
+    if (document.getElementById("reset-filters")) {
+        filterCollection();
+    }
+
+    if (document.querySelector(".faq-item")) {
+        initFAQAccordion();
+    }
 });
-
-// Lazy load and initialize features based on presence of specific elements
-if (document.querySelector(".ep-product-card")) {
-    import("./modules/cmsText.js").then(({ productHover }) => productHover());
-}
-
-if (document.querySelector(".ep-doc-dropdown")) {
-    import("./modules/docSidenav.js").then(({ initDocSideNav }) => initDocSideNav());
-}
-
-if (document.getElementById("reset-filters")) {
-    import("./modules/filterCms.js").then(({ filterCollection }) => filterCollection());
-}
-
-if (document.querySelector(".faq-item")) {
-    import("./modules/faqs.js").then(({ initFAQAccordion }) => initFAQAccordion());
-}
