@@ -131,5 +131,108 @@ export function animateNav() {
         }
     });
 
+}
+
+export function mobileHamburger() {
+  const toggleBtn = document.querySelector(".ep-menu-toggle"),
+    backdrop = document.querySelector(".ep-menu-backdrop"),
+    menuFill = document.querySelector(".ep-menu-textdrop"),
+    menuContent = document.querySelector(".ep-menu-content"),
+    menuBox = document.querySelector(".ep-menu-box"),
+    menu = document.querySelector(".ep-nav"),
+    flyoutLinks = document.querySelectorAll(".with-flyout"),
+    flyoutClose = document.querySelector(".ep-flyout-close");
+
+  let opened = false;
+
+  const tlShow = Qe.timeline({ paused: true });
+  tlShow.set(menuBox, { display: "block" }, 0);
+  tlShow.fromTo(backdrop, { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0);
+  tlShow.fromTo(menuFill, { scaleX: 0 }, { scaleX: 1, ease: "expo.out", duration: 1 }, 0);
+  tlShow.fromTo(menuContent, { xPercent: 50 }, { xPercent: 0, ease: "expo.out", duration: 1 }, 0);
+  tlShow.fromTo(menuContent, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.2).reverse();
+
+  const bindToggle = () => {
+    toggleBtn.addEventListener("click", toggleMenu);
+    backdrop.addEventListener("click", hideMenu);
+
+    // Add click listeners to all flyout links
+    flyoutLinks.forEach((flyoutLink) => {
+      flyoutLink.addEventListener("click", () => toggleFlyout(flyoutLink));
+    });
+
+    flyoutClose.addEventListener("click", hideAllFlyouts);
+  };
+
+  const toggleMenu = () => {
+    console.log("Menu toggle:", opened ? "Hiding menu" : "Showing menu");
+    opened ? hideMenu() : showMenu();
+  };
+
+  const showMenu = () => {
+    console.log("Menu is opening...");
+    menu.classList.add("-open");
+    tlShow.timeScale(1).play();
+    document.body.classList.add("overflow-y-hidden");
+    opened = true;
+  };
+
+  const hideMenu = () => {
+    console.log("Menu is closing...");
+    hideAllFlyouts(); // Ensure all flyouts are closed before closing the menu
+    menu.classList.remove("-open");
+    tlShow.timeScale(1.1).reverse();
+    document.body.classList.remove("overflow-y-hidden");
+    opened = false;
+  };
+
+  const toggleFlyout = (flyoutLink) => {
+    const isOpened = flyoutLink.getAttribute("data-state-flyout-opened") === "true";
+    console.log("Flyout toggle:", isOpened ? "Closing flyout" : "Opening flyout", flyoutLink);
+
+    if (isOpened) {
+      closeFlyout(flyoutLink);
+    } else {
+      openFlyout(flyoutLink);
+    }
+  };
+
+  const openFlyout = (flyoutLink) => {
+    console.log("Opening flyout:", flyoutLink);
+    flyoutLink.setAttribute("data-state-flyout-opened", "true");
+    const flyoutContent = flyoutLink.querySelector(".ep-sub-flyover");
+    if (flyoutContent) {
+      flyoutContent.classList.add("flyover-visible");
+    }
+    menu.classList.add("-flyover-open");
+    // tlFlyoutShow.timeScale(1).play();
+  };
+
+  const closeFlyout = (flyoutLink) => {
+    console.log("Closing flyout:", flyoutLink);
+    flyoutLink.setAttribute("data-state-flyout-opened", "false");
+    const flyoutContent = flyoutLink.querySelector(".ep-sub-flyover");
+    // tlFlyoutShow.timeScale(1).reverse();
+    if (flyoutContent) {
+      flyoutContent.classList.remove("flyover-visible");
+    }
+
+    // Check if any flyouts are still open before removing the class
+    const anyFlyoutOpen = [...flyoutLinks].some(
+      (link) => link.getAttribute("data-state-flyout-opened") === "true"
+    );
+    if (!anyFlyoutOpen) {
+      menu.classList.remove("-flyover-open");
+    }
     
+  };
+
+  const hideAllFlyouts = () => {
+    console.log("Hiding all flyouts...");
+    flyoutLinks.forEach((flyoutLink) => {
+      closeFlyout(flyoutLink);
+    });
+  };
+
+  bindToggle();
 }

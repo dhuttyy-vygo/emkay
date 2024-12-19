@@ -622,7 +622,7 @@ if (document.querySelector(".ep-doc-dropdown")) require("35ed813406190bc1").then
 if (document.getElementById("reset-filters")) require("c518051fdac46df1").then(({ filterCollection })=>filterCollection());
 if (document.querySelector(".faq-item")) require("fdf802a12dc54ea4").then(({ initFAQAccordion })=>initFAQAccordion());
 
-},{"./modules/animations.js":"3cqfm","./modules/navbarWithModal":"iEjuF","./modules/textAnimations.js":"cs5hL","./modules/faqs.js":"9jBJ5","./modules/filterCms.js":"k6dB9","./modules/cmsText.js":"6Iz6U","./modules/load.js":"4plDV","55513bfbe855bf9a":"ehR32","35ed813406190bc1":"1SKlC","c518051fdac46df1":"6mQaP","fdf802a12dc54ea4":"kqXR7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3cqfm":[function(require,module,exports,__globalThis) {
+},{"./modules/animations.js":"3cqfm","./modules/navbarWithModal":"iEjuF","./modules/textAnimations.js":"cs5hL","./modules/faqs.js":"9jBJ5","./modules/filterCms.js":"k6dB9","./modules/cmsText.js":"6Iz6U","./modules/load.js":"4plDV","55513bfbe855bf9a":"ehR32","35ed813406190bc1":"gdgPO","c518051fdac46df1":"6mQaP","fdf802a12dc54ea4":"kqXR7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3cqfm":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _gsap = require("gsap");
@@ -7076,101 +7076,64 @@ function animateNav() {
     });
 }
 function mobileHamburger() {
-    const toggleBtn = document.querySelector(".ep-menu-toggle"), backdrop = document.querySelector(".ep-menu-backdrop"), menuFill = document.querySelector(".ep-menu-textdrop"), menuContent = document.querySelector(".ep-menu-content"), menuBox = document.querySelector(".ep-menu-box"), menu = document.querySelector(".ep-nav"), flyoutLinks = document.querySelectorAll(".with-flyout"), flyoutClose = document.querySelector(".ep-flyout-close");
-    let opened = false;
-    const tlShow = Qe.timeline({
-        paused: true
-    });
-    tlShow.set(menuBox, {
-        display: "block"
-    }, 0);
-    tlShow.fromTo(backdrop, {
-        opacity: 0
-    }, {
-        opacity: 1,
-        duration: 0.4
-    }, 0);
-    tlShow.fromTo(menuFill, {
-        scaleX: 0
-    }, {
-        scaleX: 1,
-        ease: "expo.out",
-        duration: 1
-    }, 0);
-    tlShow.fromTo(menuContent, {
-        xPercent: 50
-    }, {
-        xPercent: 0,
-        ease: "expo.out",
-        duration: 1
-    }, 0);
-    tlShow.fromTo(menuContent, {
-        opacity: 0
-    }, {
-        opacity: 1,
-        duration: 0.5
-    }, 0.2).reverse();
-    const bindToggle = ()=>{
+    const toggleBtn = document.querySelector(".ep-menu-toggle"), backdrop = document.querySelector(".ep-menu-backdrop"), menu = document.querySelector(".ep-menu"), flyoutLinks = document.querySelectorAll(".with-flyout"), flyoutClose = document.querySelector(".ep-flyout-close");
+    let menuOpened = false; // Tracks if the main menu is open
+    let activeFlyout = null; // Tracks the currently active flyout
+    // Toggle the main menu
+    const toggleMenu = ()=>{
+        menuOpened ? hideMenu() : showMenu();
+    };
+    const showMenu = ()=>{
+        console.log("Menu opening...");
+        menu.classList.add("-open");
+        document.body.classList.add("overflow-y-hidden");
+        menuOpened = true;
+    };
+    const hideMenu = ()=>{
+        console.log("Menu closing...");
+        closeAllFlyouts(); // Ensure all flyouts are closed
+        menu.classList.remove("-open");
+        document.body.classList.remove("overflow-y-hidden");
+        menuOpened = false;
+    };
+    // Toggle a specific flyout
+    const toggleFlyout = (flyoutLink)=>{
+        const isActive = activeFlyout === flyoutLink;
+        if (isActive) closeFlyout(flyoutLink);
+        else {
+            closeAllFlyouts(); // Close any other open flyouts
+            openFlyout(flyoutLink);
+        }
+    };
+    const openFlyout = (flyoutLink)=>{
+        console.log("Opening flyout:", flyoutLink);
+        flyoutLink.classList.add("-flyout-open");
+        flyoutLink.setAttribute("data-state-flyout-opened", "true");
+        activeFlyout = flyoutLink; // Set this flyout as active
+    };
+    const closeFlyout = (flyoutLink)=>{
+        console.log("Closing flyout:", flyoutLink);
+        flyoutLink.classList.remove("-flyout-open");
+        flyoutLink.setAttribute("data-state-flyout-opened", "false");
+        activeFlyout = null; // Reset active flyout
+    };
+    const closeAllFlyouts = ()=>{
+        console.log("Closing all flyouts...");
+        flyoutLinks.forEach((flyoutLink)=>{
+            closeFlyout(flyoutLink);
+        });
+    };
+    // Bind event listeners
+    const bindEvents = ()=>{
         toggleBtn.addEventListener("click", toggleMenu);
         backdrop.addEventListener("click", hideMenu);
         // Add click listeners to all flyout links
         flyoutLinks.forEach((flyoutLink)=>{
             flyoutLink.addEventListener("click", ()=>toggleFlyout(flyoutLink));
         });
-        flyoutClose.addEventListener("click", hideAllFlyouts);
+        flyoutClose.addEventListener("click", closeAllFlyouts);
     };
-    const toggleMenu = ()=>{
-        console.log("Menu toggle:", opened ? "Hiding menu" : "Showing menu");
-        opened ? hideMenu() : showMenu();
-    };
-    const showMenu = ()=>{
-        console.log("Menu is opening...");
-        menu.classList.add("-open");
-        tlShow.timeScale(1).play();
-        document.body.classList.add("overflow-y-hidden");
-        opened = true;
-    };
-    const hideMenu = ()=>{
-        console.log("Menu is closing...");
-        hideAllFlyouts(); // Ensure all flyouts are closed before closing the menu
-        menu.classList.remove("-open");
-        tlShow.timeScale(1.1).reverse();
-        document.body.classList.remove("overflow-y-hidden");
-        opened = false;
-    };
-    const toggleFlyout = (flyoutLink)=>{
-        const isOpened = flyoutLink.getAttribute("data-state-flyout-opened") === "true";
-        console.log("Flyout toggle:", isOpened ? "Closing flyout" : "Opening flyout", flyoutLink);
-        if (isOpened) closeFlyout(flyoutLink);
-        else openFlyout(flyoutLink);
-    };
-    const openFlyout = (flyoutLink)=>{
-        console.log("Opening flyout:", flyoutLink);
-        flyoutLink.setAttribute("data-state-flyout-opened", "true");
-        const flyoutContent = flyoutLink.querySelector(".ep-sub-flyover");
-        if (flyoutContent) flyoutContent.classList.add("flyover-visible");
-        menu.classList.add("-flyover-open");
-    // tlFlyoutShow.timeScale(1).play();
-    };
-    const closeFlyout = (flyoutLink)=>{
-        console.log("Closing flyout:", flyoutLink);
-        flyoutLink.setAttribute("data-state-flyout-opened", "false");
-        const flyoutContent = flyoutLink.querySelector(".ep-sub-flyover");
-        // tlFlyoutShow.timeScale(1).reverse();
-        if (flyoutContent) flyoutContent.classList.remove("flyover-visible");
-        // Check if any flyouts are still open before removing the class
-        const anyFlyoutOpen = [
-            ...flyoutLinks
-        ].some((link)=>link.getAttribute("data-state-flyout-opened") === "true");
-        if (!anyFlyoutOpen) menu.classList.remove("-flyover-open");
-    };
-    const hideAllFlyouts = ()=>{
-        console.log("Hiding all flyouts...");
-        flyoutLinks.forEach((flyoutLink)=>{
-            closeFlyout(flyoutLink);
-        });
-    };
-    bindToggle();
+    bindEvents(); // Initialize event bindings
 }
 
 },{"gsap":"fPSuC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cs5hL":[function(require,module,exports,__globalThis) {
@@ -8471,13 +8434,13 @@ const initPageFadeIn = ()=>{
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ehR32":[function(require,module,exports,__globalThis) {
 module.exports = Promise.resolve(module.bundle.root("6Iz6U"));
 
-},{"6Iz6U":"6Iz6U"}],"1SKlC":[function(require,module,exports,__globalThis) {
-module.exports = require("1ea00a11c8ea215c")(require("de37ff524cf967e4").getBundleURL('lPpKD') + "docSidenav.e8c2285a.js").catch((err)=>{
+},{"6Iz6U":"6Iz6U"}],"gdgPO":[function(require,module,exports,__globalThis) {
+module.exports = require("a0ccefd2f9a8a743")(require("7628f608b3292468").getBundleURL('lPpKD') + "../docSidenav.e8c2285a.js").catch((err)=>{
     delete module.bundle.cache[module.id];
     throw err;
 }).then(()=>module.bundle.root('5k1uu'));
 
-},{"1ea00a11c8ea215c":"61B45","de37ff524cf967e4":"lgJ39","5k1uu":"5k1uu"}],"61B45":[function(require,module,exports,__globalThis) {
+},{"a0ccefd2f9a8a743":"61B45","7628f608b3292468":"lgJ39","5k1uu":"5k1uu"}],"61B45":[function(require,module,exports,__globalThis) {
 "use strict";
 var cacheLoader = require("ca2a84f7fa4a3bb0");
 module.exports = cacheLoader(function(bundle) {

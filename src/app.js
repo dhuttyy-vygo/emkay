@@ -1,6 +1,6 @@
 import Animations from "./modules/animations.js";
 // import { initLenis } from "./modules/lenis.js";
-import { animateNav, contactModal, requestQuoteModal } from "./modules/navbarWithModal";
+import { animateNav, contactModal, requestQuoteModal, mobileHamburger } from "./modules/navbarWithModal";
 import { textHighlight } from "./modules/textAnimations.js";
 import { initFAQAccordion } from "./modules/faqs.js";
 import { filterCollection } from "./modules/filterCms.js";
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     requestQuoteModal();
     textHighlight();
     animateNav();
+    mobileHamburger();
 });
 
 // Lazy load and initialize features based on presence of specific elements
