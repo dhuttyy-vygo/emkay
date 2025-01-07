@@ -1,5 +1,3 @@
-import gsap from "gsap";
-
 
 export function productHover () {
     const product = document.querySelectorAll(".ep-product-card");

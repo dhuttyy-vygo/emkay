@@ -597,9 +597,12 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"bNKaB":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _animationsJs = require("./modules/animations.js");
-var _animationsJsDefault = parcelHelpers.interopDefault(_animationsJs);
-// import { initLenis } from "./modules/lenis.js";
+var _gsap = require("gsap");
+var _gsapDefault = parcelHelpers.interopDefault(_gsap);
+var _scrollTrigger = require("gsap/ScrollTrigger");
+var _scrollTriggerDefault = parcelHelpers.interopDefault(_scrollTrigger);
+var _splitType = require("split-type");
+var _splitTypeDefault = parcelHelpers.interopDefault(_splitType);
 var _navbarWithModal = require("./modules/navbarWithModal");
 var _textAnimationsJs = require("./modules/textAnimations.js");
 var _faqsJs = require("./modules/faqs.js");
@@ -607,10 +610,9 @@ var _filterCmsJs = require("./modules/filterCms.js");
 var _cmsTextJs = require("./modules/cmsText.js");
 var _loadJs = require("./modules/load.js");
 var _docSidenavJs = require("./modules/docSidenav.js");
-// Initialize global features
+(0, _gsapDefault.default).registerPlugin((0, _scrollTriggerDefault.default));
+let z = (0, _splitTypeDefault.default);
 document.addEventListener("DOMContentLoaded", ()=>{
-    // Always run these global features
-    (0, _animationsJsDefault.default).initPageAnimations();
     (0, _navbarWithModal.contactModal)();
     (0, _loadJs.initPageFadeIn)();
     (0, _navbarWithModal.requestQuoteModal)();
@@ -620,55 +622,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     (0, _docSidenavJs.initDocSideNav)();
     (0, _navbarWithModal.industryHover)();
     playImageSequence();
-    // Conditionally initialize features based on presence of specific elements
-    if (document.querySelector(".ep-product-card")) (0, _cmsTextJs.productHover)();
-    if (document.getElementById("reset-filters")) (0, _filterCmsJs.filterCollection)();
-    if (document.querySelector(".faq-item")) (0, _faqsJs.initFAQAccordion)();
+    (0, _cmsTextJs.productHover)();
+    (0, _filterCmsJs.filterCollection)();
+    (0, _faqsJs.initFAQAccordion)();
 });
 
-},{"./modules/animations.js":"3cqfm","./modules/navbarWithModal":"iEjuF","./modules/textAnimations.js":"cs5hL","./modules/faqs.js":"9jBJ5","./modules/filterCms.js":"k6dB9","./modules/cmsText.js":"6Iz6U","./modules/load.js":"4plDV","./modules/docSidenav.js":"5k1uu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3cqfm":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _gsap = require("gsap");
-var _gsapDefault = parcelHelpers.interopDefault(_gsap);
-var _scrollTrigger = require("gsap/ScrollTrigger");
-var _scrollTriggerDefault = parcelHelpers.interopDefault(_scrollTrigger);
-(0, _gsapDefault.default).registerPlugin((0, _scrollTriggerDefault.default));
-const Qe = (0, _gsapDefault.default);
-const Sc = (0, _scrollTriggerDefault.default);
-// Encapsulate all animation logic inside an object
-const Animations = {
-    // Main function to initialize animations
-    initPageAnimations () {
-        this.animateWithIncrementalDelay(".ep-line-animation-seperator");
-    },
-    // Private function for incremental animation delay
-    animateWithIncrementalDelay (selector) {
-        // Select all elements matching the provided selector
-        const elements = document.querySelectorAll(selector);
-        // Loop through each element and apply an incremental animation delay
-        elements.forEach((element, index)=>{
-            const delay = index * 0.05; // Incremental delay: 100ms per element
-            element.style.animationDelay = `${delay}s`; // Set the CSS animation delay
-        });
-    },
-    // Function to animate a specific box
-    animateBox (selector) {
-        const box = document.querySelector(selector);
-        if (!box) {
-            console.warn(`No element found with selector: ${selector}`);
-            return;
-        }
-        Qe.to(box, {
-            x: 200,
-            duration: 1,
-            ease: "power2.out"
-        });
-    }
-};
-exports.default = Animations;
-
-},{"gsap":"fPSuC","gsap/ScrollTrigger":"7wnFk","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fPSuC":[function(require,module,exports,__globalThis) {
+},{"gsap":"fPSuC","gsap/ScrollTrigger":"7wnFk","split-type":"fvGAG","./modules/navbarWithModal":"iEjuF","./modules/textAnimations.js":"cs5hL","./modules/faqs.js":"9jBJ5","./modules/filterCms.js":"k6dB9","./modules/cmsText.js":"6Iz6U","./modules/load.js":"4plDV","./modules/docSidenav.js":"5k1uu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fPSuC":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "gsap", ()=>gsapWithCSS);
@@ -6946,300 +6905,7 @@ Observer.getById = function(id) {
 };
 _getGSAP() && gsap.registerPlugin(Observer);
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iEjuF":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "contactModal", ()=>contactModal);
-parcelHelpers.export(exports, "requestQuoteModal", ()=>requestQuoteModal);
-parcelHelpers.export(exports, "animateNav", ()=>animateNav);
-parcelHelpers.export(exports, "mobileHamburger", ()=>mobileHamburger);
-parcelHelpers.export(exports, "industryHover", ()=>industryHover);
-var _gsap = require("gsap");
-var _gsapDefault = parcelHelpers.interopDefault(_gsap);
-const Qe = (0, _gsapDefault.default);
-function contactModal() {
-    const openBtn = document.querySelectorAll("[contact-menu-open]"), backdrop = document.getElementById("contact-backdrop"), backdropBackground = document.querySelector(".ep-contact-backdrop"), closeBtn = document.getElementById("close-contact"), menuContent = document.getElementById("contact-menu-box"), menu = document.querySelector(".ep-contact-modal");
-    let opened = false;
-    // Qe.set(menu, { autoAlpha: 0 });
-    const tlShow = Qe.timeline({
-        paused: true
-    });
-    tlShow.set(menu, {
-        display: "block"
-    }, 0);
-    // tlShow.to(menu, { autoAlpha: 1, duration: 1}, 0);
-    tlShow.fromTo(backdropBackground, {
-        autoAlpha: 0
-    }, {
-        autoAlpha: 1,
-        duration: .5,
-        ease: "expo.out"
-    }, 0);
-    tlShow.fromTo(menuContent, {
-        yPercent: 50,
-        autoAlpha: 0
-    }, {
-        yPercent: 0,
-        autoAlpha: 1,
-        ease: "expo.out",
-        duration: 1
-    }, 0.1).reverse();
-    const toggle = ()=>opened ? hide() : show();
-    const show = ()=>{
-        menu.classList.add("-open");
-        tlShow.timeScale(1).play();
-        opened = true;
-    };
-    const hide = ()=>{
-        menu.classList.remove("-open");
-        tlShow.timeScale(1.13).reverse();
-        opened = false;
-    };
-    // Attach event listeners to all open buttons
-    openBtn.forEach((btn)=>{
-        btn.addEventListener("click", ()=>{
-            toggle();
-        });
-    });
-    closeBtn.addEventListener("click", hide);
-    backdrop.addEventListener("click", hide);
-}
-function requestQuoteModal() {
-    const openBtn = document.querySelectorAll("[sample-menu-open]"), backdrop = document.getElementById("sample-backdrop"), backdropBackground = document.querySelector(".ep-sample-backdrop"), closeBtn = document.getElementById("close-sample"), menuContent = document.getElementById("sample-menu-box"), menu = document.querySelector(".ep-sample-modal");
-    let opened = false;
-    // Select all input elements inside .check .link
-    document.querySelectorAll(".check .link input").forEach((input)=>{
-        input.addEventListener("change", function() {
-            // Find the closest parent with class 'link' and toggle 'selected-toggle'
-            this.closest(".link").classList.toggle("selected-toggle");
-        });
-    });
-    // Qe.set(menu, { autoAlpha: 0 });
-    const tlShow = Qe.timeline({
-        paused: true
-    });
-    tlShow.set(menu, {
-        display: "block"
-    }, 0);
-    // tlShow.to(menu, { autoAlpha: 1, duration: 1}, 0);
-    tlShow.fromTo(backdropBackground, {
-        autoAlpha: 0
-    }, {
-        autoAlpha: 1,
-        duration: .5,
-        ease: "expo.out"
-    }, 0);
-    tlShow.fromTo(menuContent, {
-        yPercent: 50,
-        autoAlpha: 0
-    }, {
-        yPercent: 0,
-        autoAlpha: 1,
-        ease: "expo.out",
-        duration: 1
-    }, 0.1).reverse();
-    const toggle = ()=>opened ? hide() : show();
-    const show = ()=>{
-        menu.classList.add("-open");
-        tlShow.timeScale(1).play();
-        opened = true;
-    };
-    const hide = ()=>{
-        menu.classList.remove("-open");
-        tlShow.timeScale(1.13).reverse();
-        opened = false;
-    };
-    // Attach event listeners to all open buttons
-    openBtn.forEach((btn)=>{
-        btn.addEventListener("click", ()=>{
-            toggle();
-        });
-    });
-    closeBtn.addEventListener("click", hide);
-    backdrop.addEventListener("click", hide);
-}
-function animateNav() {
-    const body = document.body;
-    const nav = document.getElementById("ep-nav");
-    const backdrop = document.querySelector(".ep-header-background");
-    // Get initial state from body attribute
-    const initState = body.getAttribute("data-transparent");
-    // If the body is not set to start as transparent, exit the function
-    if (initState !== "true") return;
-    let isTransparent = true; // Track the current state
-    // Scroll event listener
-    window.addEventListener("scroll", ()=>{
-        const scrollY = window.scrollY;
-        // Check scroll position and toggle data attribute on body
-        if (scrollY > 100 && isTransparent) {
-            body.setAttribute("data-transparent", "false");
-            isTransparent = false;
-        } else if (scrollY <= 100 && !isTransparent) {
-            body.setAttribute("data-transparent", "true");
-            isTransparent = true;
-        }
-    });
-}
-function mobileHamburger() {
-    const toggleBtn = document.querySelector(".ep-menu-toggle"), backdrop = document.querySelector(".ep-menu-backdrop"), menuFill = document.querySelector(".ep-menu-textdrop"), menuContent = document.querySelector(".ep-menu-content"), menuBox = document.querySelector(".ep-menu-box"), menu = document.querySelector(".ep-nav"), flyoutLinks = document.querySelectorAll(".with-flyout"), flyoutClose = document.querySelector(".ep-flyout-close");
-    let opened = false;
-    const tlShow = Qe.timeline({
-        paused: true
-    });
-    tlShow.set(menuBox, {
-        display: "block"
-    }, 0);
-    tlShow.fromTo(backdrop, {
-        opacity: 0
-    }, {
-        opacity: 1,
-        duration: 0.4
-    }, 0);
-    tlShow.fromTo(menuFill, {
-        scaleX: 0
-    }, {
-        scaleX: 1,
-        ease: "expo.out",
-        duration: 1
-    }, 0);
-    tlShow.fromTo(menuContent, {
-        xPercent: 50
-    }, {
-        xPercent: 0,
-        ease: "expo.out",
-        duration: 1
-    }, 0);
-    tlShow.fromTo(menuContent, {
-        opacity: 0
-    }, {
-        opacity: 1,
-        duration: 0.5
-    }, 0.2).reverse();
-    const bindToggle = ()=>{
-        toggleBtn.addEventListener("click", toggleMenu);
-        backdrop.addEventListener("click", hideMenu);
-        // Add click listeners to all flyout links
-        flyoutLinks.forEach((flyoutLink)=>{
-            flyoutLink.addEventListener("click", ()=>toggleFlyout(flyoutLink));
-        });
-        flyoutClose.addEventListener("click", hideAllFlyouts);
-    };
-    const toggleMenu = ()=>{
-        console.log("Menu toggle:", opened ? "Hiding menu" : "Showing menu");
-        opened ? hideMenu() : showMenu();
-    };
-    const showMenu = ()=>{
-        console.log("Menu is opening...");
-        menu.classList.add("-open");
-        tlShow.timeScale(1).play();
-        document.body.classList.add("overflow-y-hidden");
-        opened = true;
-    };
-    const hideMenu = ()=>{
-        console.log("Menu is closing...");
-        hideAllFlyouts(); // Ensure all flyouts are closed before closing the menu
-        menu.classList.remove("-open");
-        tlShow.timeScale(1.1).reverse();
-        document.body.classList.remove("overflow-y-hidden");
-        opened = false;
-    };
-    const toggleFlyout = (flyoutLink)=>{
-        const isOpened = flyoutLink.getAttribute("data-state-flyout-opened") === "true";
-        console.log("Flyout toggle:", isOpened ? "Closing flyout" : "Opening flyout", flyoutLink);
-        if (isOpened) closeFlyout(flyoutLink);
-        else openFlyout(flyoutLink);
-    };
-    const openFlyout = (flyoutLink)=>{
-        console.log("Opening flyout:", flyoutLink);
-        flyoutLink.setAttribute("data-state-flyout-opened", "true");
-        const flyoutContent = flyoutLink.querySelector(".ep-sub-flyover");
-        if (flyoutContent) flyoutContent.classList.add("flyover-visible");
-        menu.classList.add("-flyover-open");
-    // tlFlyoutShow.timeScale(1).play();
-    };
-    const closeFlyout = (flyoutLink)=>{
-        console.log("Closing flyout:", flyoutLink);
-        flyoutLink.setAttribute("data-state-flyout-opened", "false");
-        const flyoutContent = flyoutLink.querySelector(".ep-sub-flyover");
-        // tlFlyoutShow.timeScale(1).reverse();
-        if (flyoutContent) flyoutContent.classList.remove("flyover-visible");
-        // Check if any flyouts are still open before removing the class
-        const anyFlyoutOpen = [
-            ...flyoutLinks
-        ].some((link)=>link.getAttribute("data-state-flyout-opened") === "true");
-        if (!anyFlyoutOpen) menu.classList.remove("-flyover-open");
-    };
-    const hideAllFlyouts = ()=>{
-        console.log("Hiding all flyouts...");
-        flyoutLinks.forEach((flyoutLink)=>{
-            closeFlyout(flyoutLink);
-        });
-    };
-    bindToggle();
-}
-function industryHover() {
-    const components = document.querySelectorAll(".hover_component");
-    components.forEach((component)=>{
-        const triggerEls = component.querySelectorAll(".industry-hover-item");
-        const targetEl = component.querySelector(".ep-industry-imgs");
-        triggerEls.forEach((trigger, index)=>{
-            trigger.addEventListener("mouseenter", ()=>{
-                targetEl.style.transform = `translateY(${index * -100}%)`;
-            });
-        });
-    });
-}
-
-},{"gsap":"fPSuC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cs5hL":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "textHighlight", ()=>textHighlight);
-var _gsap = require("gsap");
-var _gsapDefault = parcelHelpers.interopDefault(_gsap);
-var _scrollTrigger = require("gsap/ScrollTrigger");
-var _scrollTriggerDefault = parcelHelpers.interopDefault(_scrollTrigger);
-var _splitType = require("split-type");
-var _splitTypeDefault = parcelHelpers.interopDefault(_splitType);
-(0, _gsapDefault.default).registerPlugin((0, _scrollTriggerDefault.default));
-const Qe = (0, _gsapDefault.default);
-const Sc = (0, _scrollTriggerDefault.default);
-function textHighlight() {
-    const textHighlight = new (0, _splitTypeDefault.default)("[data-split='highlight']", {
-        types: 'words',
-        wordClass: "highlight-text"
-    });
-    const lineSplit = new (0, _splitTypeDefault.default)("[data-split='lines']", {
-        types: 'lines',
-        lineClass: "line-in"
-    });
-    const t = document.querySelectorAll(".highlight-text");
-    if (!t.length) return;
-    const tl = new Qe.timeline();
-    tl.to(t, {
-        color: "var(--swatch--brand-invert)",
-        opacity: 1,
-        duration: 1,
-        stagger: {
-            amount: .5
-        },
-        ease: "power2.out"
-    }), tl.fromTo(t, {
-        color: "var(--swatch--brand-invert)"
-    }, {
-        color: "#333",
-        duration: 1,
-        stagger: {
-            amount: .5
-        },
-        ease: "power2.out"
-    }, "<+=1"), Sc.create({
-        trigger: t,
-        start: "top bottom",
-        animation: tl
-    });
-}
-
-},{"gsap":"fPSuC","gsap/ScrollTrigger":"7wnFk","split-type":"fvGAG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fvGAG":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fvGAG":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>SplitType);
@@ -8290,7 +7956,300 @@ var SplitType = /*#__PURE__*/ function() {
     return SplitType;
 }();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9jBJ5":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iEjuF":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "contactModal", ()=>contactModal);
+parcelHelpers.export(exports, "requestQuoteModal", ()=>requestQuoteModal);
+parcelHelpers.export(exports, "animateNav", ()=>animateNav);
+parcelHelpers.export(exports, "mobileHamburger", ()=>mobileHamburger);
+parcelHelpers.export(exports, "industryHover", ()=>industryHover);
+var _gsap = require("gsap");
+var _gsapDefault = parcelHelpers.interopDefault(_gsap);
+const Qe = (0, _gsapDefault.default);
+function contactModal() {
+    const openBtn = document.querySelectorAll("[contact-menu-open]"), backdrop = document.getElementById("contact-backdrop"), backdropBackground = document.querySelector(".ep-contact-backdrop"), closeBtn = document.getElementById("close-contact"), menuContent = document.getElementById("contact-menu-box"), menu = document.querySelector(".ep-contact-modal");
+    let opened = false;
+    // Qe.set(menu, { autoAlpha: 0 });
+    const tlShow = Qe.timeline({
+        paused: true
+    });
+    tlShow.set(menu, {
+        display: "block"
+    }, 0);
+    // tlShow.to(menu, { autoAlpha: 1, duration: 1}, 0);
+    tlShow.fromTo(backdropBackground, {
+        autoAlpha: 0
+    }, {
+        autoAlpha: 1,
+        duration: .5,
+        ease: "expo.out"
+    }, 0);
+    tlShow.fromTo(menuContent, {
+        yPercent: 50,
+        autoAlpha: 0
+    }, {
+        yPercent: 0,
+        autoAlpha: 1,
+        ease: "expo.out",
+        duration: 1
+    }, 0.1).reverse();
+    const toggle = ()=>opened ? hide() : show();
+    const show = ()=>{
+        menu.classList.add("-open");
+        tlShow.timeScale(1).play();
+        opened = true;
+    };
+    const hide = ()=>{
+        menu.classList.remove("-open");
+        tlShow.timeScale(1.13).reverse();
+        opened = false;
+    };
+    // Attach event listeners to all open buttons
+    openBtn.forEach((btn)=>{
+        btn.addEventListener("click", ()=>{
+            toggle();
+        });
+    });
+    closeBtn.addEventListener("click", hide);
+    backdrop.addEventListener("click", hide);
+}
+function requestQuoteModal() {
+    const openBtn = document.querySelectorAll("[sample-menu-open]"), backdrop = document.getElementById("sample-backdrop"), backdropBackground = document.querySelector(".ep-sample-backdrop"), closeBtn = document.getElementById("close-sample"), menuContent = document.getElementById("sample-menu-box"), menu = document.querySelector(".ep-sample-modal");
+    let opened = false;
+    // Select all input elements inside .check .link
+    document.querySelectorAll(".check .link input").forEach((input)=>{
+        input.addEventListener("change", function() {
+            // Find the closest parent with class 'link' and toggle 'selected-toggle'
+            this.closest(".link").classList.toggle("selected-toggle");
+        });
+    });
+    // Qe.set(menu, { autoAlpha: 0 });
+    const tlShow = Qe.timeline({
+        paused: true
+    });
+    tlShow.set(menu, {
+        display: "block"
+    }, 0);
+    // tlShow.to(menu, { autoAlpha: 1, duration: 1}, 0);
+    tlShow.fromTo(backdropBackground, {
+        autoAlpha: 0
+    }, {
+        autoAlpha: 1,
+        duration: .5,
+        ease: "expo.out"
+    }, 0);
+    tlShow.fromTo(menuContent, {
+        yPercent: 50,
+        autoAlpha: 0
+    }, {
+        yPercent: 0,
+        autoAlpha: 1,
+        ease: "expo.out",
+        duration: 1
+    }, 0.1).reverse();
+    const toggle = ()=>opened ? hide() : show();
+    const show = ()=>{
+        menu.classList.add("-open");
+        tlShow.timeScale(1).play();
+        opened = true;
+    };
+    const hide = ()=>{
+        menu.classList.remove("-open");
+        tlShow.timeScale(1.13).reverse();
+        opened = false;
+    };
+    // Attach event listeners to all open buttons
+    openBtn.forEach((btn)=>{
+        btn.addEventListener("click", ()=>{
+            toggle();
+        });
+    });
+    closeBtn.addEventListener("click", hide);
+    backdrop.addEventListener("click", hide);
+}
+function animateNav() {
+    const body = document.body;
+    const nav = document.getElementById("ep-nav");
+    const backdrop = document.querySelector(".ep-header-background");
+    // Get initial state from body attribute
+    const initState = body.getAttribute("data-transparent");
+    // If the body is not set to start as transparent, exit the function
+    if (initState !== "true") return;
+    let isTransparent = true; // Track the current state
+    // Scroll event listener
+    window.addEventListener("scroll", ()=>{
+        const scrollY = window.scrollY;
+        // Check scroll position and toggle data attribute on body
+        if (scrollY > 100 && isTransparent) {
+            body.setAttribute("data-transparent", "false");
+            isTransparent = false;
+        } else if (scrollY <= 100 && !isTransparent) {
+            body.setAttribute("data-transparent", "true");
+            isTransparent = true;
+        }
+    });
+}
+function mobileHamburger() {
+    const toggleBtn = document.querySelector(".ep-menu-toggle"), backdrop = document.querySelector(".ep-menu-backdrop"), menuFill = document.querySelector(".ep-menu-textdrop"), menuContent = document.querySelector(".ep-menu-content"), menuBox = document.querySelector(".ep-menu-box"), menu = document.querySelector(".ep-nav"), flyoutLinks = document.querySelectorAll(".with-flyout"), flyoutClose = document.querySelector(".ep-flyout-close");
+    let opened = false;
+    const tlShow = Qe.timeline({
+        paused: true
+    });
+    tlShow.set(menuBox, {
+        display: "block"
+    }, 0);
+    tlShow.fromTo(backdrop, {
+        opacity: 0
+    }, {
+        opacity: 1,
+        duration: 0.4
+    }, 0);
+    tlShow.fromTo(menuFill, {
+        scaleX: 0
+    }, {
+        scaleX: 1,
+        ease: "expo.out",
+        duration: 1
+    }, 0);
+    tlShow.fromTo(menuContent, {
+        xPercent: 50
+    }, {
+        xPercent: 0,
+        ease: "expo.out",
+        duration: 1
+    }, 0);
+    tlShow.fromTo(menuContent, {
+        opacity: 0
+    }, {
+        opacity: 1,
+        duration: 0.5
+    }, 0.2).reverse();
+    const bindToggle = ()=>{
+        toggleBtn.addEventListener("click", toggleMenu);
+        backdrop.addEventListener("click", hideMenu);
+        // Add click listeners to all flyout links
+        flyoutLinks.forEach((flyoutLink)=>{
+            flyoutLink.addEventListener("click", ()=>toggleFlyout(flyoutLink));
+        });
+        flyoutClose.addEventListener("click", hideAllFlyouts);
+    };
+    const toggleMenu = ()=>{
+        console.log("Menu toggle:", opened ? "Hiding menu" : "Showing menu");
+        opened ? hideMenu() : showMenu();
+    };
+    const showMenu = ()=>{
+        console.log("Menu is opening...");
+        menu.classList.add("-open");
+        tlShow.timeScale(1).play();
+        document.body.classList.add("overflow-y-hidden");
+        opened = true;
+    };
+    const hideMenu = ()=>{
+        console.log("Menu is closing...");
+        hideAllFlyouts(); // Ensure all flyouts are closed before closing the menu
+        menu.classList.remove("-open");
+        tlShow.timeScale(1.1).reverse();
+        document.body.classList.remove("overflow-y-hidden");
+        opened = false;
+    };
+    const toggleFlyout = (flyoutLink)=>{
+        const isOpened = flyoutLink.getAttribute("data-state-flyout-opened") === "true";
+        console.log("Flyout toggle:", isOpened ? "Closing flyout" : "Opening flyout", flyoutLink);
+        if (isOpened) closeFlyout(flyoutLink);
+        else openFlyout(flyoutLink);
+    };
+    const openFlyout = (flyoutLink)=>{
+        console.log("Opening flyout:", flyoutLink);
+        flyoutLink.setAttribute("data-state-flyout-opened", "true");
+        const flyoutContent = flyoutLink.querySelector(".ep-sub-flyover");
+        if (flyoutContent) flyoutContent.classList.add("flyover-visible");
+        menu.classList.add("-flyover-open");
+    // tlFlyoutShow.timeScale(1).play();
+    };
+    const closeFlyout = (flyoutLink)=>{
+        console.log("Closing flyout:", flyoutLink);
+        flyoutLink.setAttribute("data-state-flyout-opened", "false");
+        const flyoutContent = flyoutLink.querySelector(".ep-sub-flyover");
+        // tlFlyoutShow.timeScale(1).reverse();
+        if (flyoutContent) flyoutContent.classList.remove("flyover-visible");
+        // Check if any flyouts are still open before removing the class
+        const anyFlyoutOpen = [
+            ...flyoutLinks
+        ].some((link)=>link.getAttribute("data-state-flyout-opened") === "true");
+        if (!anyFlyoutOpen) menu.classList.remove("-flyover-open");
+    };
+    const hideAllFlyouts = ()=>{
+        console.log("Hiding all flyouts...");
+        flyoutLinks.forEach((flyoutLink)=>{
+            closeFlyout(flyoutLink);
+        });
+    };
+    bindToggle();
+}
+function industryHover() {
+    const components = document.querySelectorAll(".hover_component");
+    components.forEach((component)=>{
+        const triggerEls = component.querySelectorAll(".industry-hover-item");
+        const targetEl = component.querySelector(".ep-industry-imgs");
+        triggerEls.forEach((trigger, index)=>{
+            trigger.addEventListener("mouseenter", ()=>{
+                targetEl.style.transform = `translateY(${index * -100}%)`;
+            });
+        });
+    });
+}
+
+},{"gsap":"fPSuC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cs5hL":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "textHighlight", ()=>textHighlight);
+var _gsap = require("gsap");
+var _gsapDefault = parcelHelpers.interopDefault(_gsap);
+var _scrollTrigger = require("gsap/ScrollTrigger");
+var _scrollTriggerDefault = parcelHelpers.interopDefault(_scrollTrigger);
+var _splitType = require("split-type");
+var _splitTypeDefault = parcelHelpers.interopDefault(_splitType);
+(0, _gsapDefault.default).registerPlugin((0, _scrollTriggerDefault.default));
+const Qe = (0, _gsapDefault.default);
+const Sc = (0, _scrollTriggerDefault.default);
+function textHighlight() {
+    const textHighlight = new (0, _splitTypeDefault.default)("[data-split='highlight']", {
+        types: 'words',
+        wordClass: "highlight-text"
+    });
+    const lineSplit = new (0, _splitTypeDefault.default)("[data-split='lines']", {
+        types: 'lines',
+        lineClass: "line-in"
+    });
+    const t = document.querySelectorAll(".highlight-text");
+    if (!t.length) return;
+    const tl = new Qe.timeline();
+    tl.to(t, {
+        color: "var(--swatch--brand-invert)",
+        opacity: 1,
+        duration: 1,
+        stagger: {
+            amount: .5
+        },
+        ease: "power2.out"
+    }), tl.fromTo(t, {
+        color: "var(--swatch--brand-invert)"
+    }, {
+        color: "#333",
+        duration: 1,
+        stagger: {
+            amount: .5
+        },
+        ease: "power2.out"
+    }, "<+=1"), Sc.create({
+        trigger: t,
+        start: "top bottom",
+        animation: tl
+    });
+}
+
+},{"gsap":"fPSuC","gsap/ScrollTrigger":"7wnFk","split-type":"fvGAG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9jBJ5":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // this is a test
@@ -8442,8 +8401,6 @@ function filterCollection() {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "productHover", ()=>productHover);
-var _gsap = require("gsap");
-var _gsapDefault = parcelHelpers.interopDefault(_gsap);
 function productHover() {
     const product = document.querySelectorAll(".ep-product-card");
     product.forEach((e)=>{
@@ -8457,7 +8414,7 @@ function productHover() {
     });
 }
 
-},{"gsap":"fPSuC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4plDV":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4plDV":[function(require,module,exports,__globalThis) {
 // export const initPageFadeIn = () => {
 //     const heroElement = document.querySelectorAll("[data-hero]");
 //     if (heroElement.length === 0) return; // Exit if no hero element exists

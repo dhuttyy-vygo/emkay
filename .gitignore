@@ -33,3 +33,9 @@ node_modules/
 
 # Parcel-generated source maps (optional)
 *.map.parcel-cache/
+
+# Local holder html for webflow
+navbar.css
+preminified.html
+minifiedcss.html
+holder.html
