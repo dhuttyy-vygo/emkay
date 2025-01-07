@@ -7,7 +7,7 @@ import { filterCollection } from "./modules/filterCms.js";
 import { productHover } from "./modules/cmsText.js";
 import { initPageFadeIn } from "./modules/load.js";
 import { initDocSideNav } from "./modules/docSidenav.js";
-import { playImageSequence } from "./modules/homePreload.js";
+
 // Initialize global features
 document.addEventListener("DOMContentLoaded", () => {
     // Always run these global features
