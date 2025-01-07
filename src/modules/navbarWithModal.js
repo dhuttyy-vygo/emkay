@@ -236,3 +236,18 @@ export function mobileHamburger() {
 
   bindToggle();
 }
+
+export function industryHover() {
+  const components = document.querySelectorAll(".hover_component");
+
+  components.forEach((component) => {
+    const triggerEls = component.querySelectorAll(".industry-hover-item");
+    const targetEl = component.querySelector(".ep-industry-imgs");
+
+    triggerEls.forEach((trigger, index) => {
+      trigger.addEventListener("mouseenter", () => {
+        targetEl.style.transform = `translateY(${index * -100}%)`;
+      });
+    });
+  });
+}
