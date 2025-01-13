@@ -13,7 +13,7 @@
     "parcel": "^2.13.3"
   },
   "scripts": {
-    "dev": "parcel src/app.js",
+    "dev": "parcel src/app.js src/swiperapp.js",
     "build": "node esbuild.js"
   },
   "browserslist": [

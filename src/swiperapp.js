@@ -1,4 +1,5 @@
 
+
 document.addEventListener("DOMContentLoaded", () => {
     // Dynamically append Swiper controls
     $("[swiper-data-scrollbar]").append(`<div class="swiper-scrollbar"></div>`);
@@ -49,23 +50,53 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    const swiper3 = new Swiper(".swiper-milestones", {
-      direction: "horizontal",
-      loop: false,
-      slidesPerView: "auto",
-      // slidesPerGroup: 1,
-      // spaceBetween: 20,
-      freemode: true,
-      centeredSlides: false,
-      mousewheel: {
-          forceToAxis: true
-      },
-      speed: 300,
-      scrollbar: {
-        el: ".swiper-scrollbar",
-        draggable: true,
-      }
-      
-  });
+
+    // Initialize Swiper sliders
+const timelineContents = new Swiper (".timeline-contents", {
+    grabCursor: true,
+    spaceBetween: 30,
+    freeMode: true, // Enables freemode for the milestones
+    centeredSlides: false,
+    slidesPerView: 'auto',
+    
+    on: {
+        slideChange: function () {
+            updateYearTracker();
+        },
+        progress: function () {
+            updateYearTracker();
+        },
+    },
+});
+
+const timelineDates = new Swiper('.timeline-dates', {
+    spaceBetween: 70,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    touchRatio: 0.2, // Makes it less sensitive to touch
+    slideToClickedSlide: true, // Sync with clicks
+});
+
+// Sync the two sliders
+timelineContents.controller.control = timelineDates;
+timelineDates.controller.control = timelineContents;
+
+// Update the active year in the year tracker
+function updateYearTracker() {
+    const slides = document.querySelectorAll('.timeline-contents .swiper-slide');
+    const activeSlides = Array.from(slides).filter(slide => {
+        const slideBounds = slide.getBoundingClientRect();
+        return slideBounds.left >= 0 && slideBounds.right <= window.innerWidth;
+    });
+
+    if (activeSlides.length > 0) {
+        const activeYear = activeSlides[0].dataset.year;
+
+        // Update the timeline-dates Swiper
+        document.querySelectorAll('.timeline-dates .swiper-slide').forEach(slide => {
+            slide.classList.toggle('active', slide.dataset.year === activeYear);
+        });
+    }
+}
 
 });
