@@ -638,23 +638,47 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }
         });
     });
-    const swiper3 = new Swiper(".swiper-milestones", {
-        direction: "horizontal",
-        loop: false,
-        slidesPerView: "auto",
-        // slidesPerGroup: 1,
-        // spaceBetween: 20,
-        freemode: true,
+    // Initialize Swiper sliders
+    const timelineContents = new Swiper(".timeline-contents", {
+        grabCursor: true,
+        spaceBetween: 30,
+        freeMode: true,
         centeredSlides: false,
-        mousewheel: {
-            forceToAxis: true
-        },
-        speed: 300,
-        scrollbar: {
-            el: ".swiper-scrollbar",
-            draggable: true
+        slidesPerView: 'auto',
+        on: {
+            slideChange: function() {
+                updateYearTracker();
+            },
+            progress: function() {
+                updateYearTracker();
+            }
         }
     });
+    const timelineDates = new Swiper('.timeline-dates', {
+        spaceBetween: 70,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        touchRatio: 0.2,
+        slideToClickedSlide: true
+    });
+    // Sync the two sliders
+    timelineContents.controller.control = timelineDates;
+    timelineDates.controller.control = timelineContents;
+    // Update the active year in the year tracker
+    function updateYearTracker() {
+        const slides = document.querySelectorAll('.timeline-contents .swiper-slide');
+        const activeSlides = Array.from(slides).filter((slide)=>{
+            const slideBounds = slide.getBoundingClientRect();
+            return slideBounds.left >= 0 && slideBounds.right <= window.innerWidth;
+        });
+        if (activeSlides.length > 0) {
+            const activeYear = activeSlides[0].dataset.year;
+            // Update the timeline-dates Swiper
+            document.querySelectorAll('.timeline-dates .swiper-slide').forEach((slide)=>{
+                slide.classList.toggle('active', slide.dataset.year === activeYear);
+            });
+        }
+    }
 });
 
 },{}]},["hmsWU","kSDmC"], "kSDmC", "parcelRequire94c2")

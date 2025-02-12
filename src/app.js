@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileHamburger();
     initDocSideNav();
     industryHover();
-    playImageSequence();
     productHover();
     filterCollection();
     initFAQAccordion();
