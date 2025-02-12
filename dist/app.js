@@ -621,7 +621,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     (0, _navbarWithModal.mobileHamburger)();
     (0, _docSidenavJs.initDocSideNav)();
     (0, _navbarWithModal.industryHover)();
-    playImageSequence();
     (0, _cmsTextJs.productHover)();
     (0, _filterCmsJs.filterCollection)();
     (0, _faqsJs.initFAQAccordion)();
@@ -8319,6 +8318,7 @@ var _gsap = require("gsap");
 var _gsapDefault = parcelHelpers.interopDefault(_gsap);
 function filterCollection() {
     const cmsItems = document.querySelectorAll(".ep-cms-items"); // Select all CMS items
+    if (!cmsItems.length) return;
     const filterOptions = document.querySelectorAll(".filter-option"); // Select all filter options
     const resetButton = document.getElementById("reset-filters"); // Reset button
     const savedFilters = JSON.parse(localStorage.getItem("activeFilters")) || {

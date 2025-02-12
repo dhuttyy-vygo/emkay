@@ -2,6 +2,8 @@ import gsap from "gsap";
 
 export function filterCollection() {
     const cmsItems = document.querySelectorAll(".ep-cms-items"); // Select all CMS items
+    if (!cmsItems.length) return;
+    
     const filterOptions = document.querySelectorAll(".filter-option"); // Select all filter options
     const resetButton = document.getElementById("reset-filters"); // Reset button
 
