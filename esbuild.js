@@ -20,4 +20,9 @@ esbuild.build({
   platform: 'browser', // Target browser environments
   sourcemap: false, // Optional: Set to 'inline' or 'external' if needed
   target: ['es6'], // Target modern browsers
+  loader: { 
+    '.css': 'css' 
+  },
+  // This will inject CSS into a style tag
+  inject: ['./setup-css.js'],
 }).catch(() => process.exit(1));
