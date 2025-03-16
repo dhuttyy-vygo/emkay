@@ -8031,7 +8031,7 @@ function requestQuoteModal() {
         display: "block"
     }, 0);
     // tlShow.to(menu, { autoAlpha: 1, duration: 1}, 0);
-    tlShow.fromTo(backdropBackground, {
+    tlShow.fromTo(backdropBackground, 
         autoAlpha: 0
     }, {
         autoAlpha: 1,
