@@ -5,14 +5,17 @@
   "main": "dist/app.js",
   "dependencies": {
     "gsap": "^3.12.5",
-    "split-type": "^0.3.4"
+    "split-type": "^0.3.4",
+    "swiper": "^9.1.0"
   },
   "devDependencies": {
     "@parcel/reporter-bundle-buddy": "^2.13.3",
-    "esbuild": "^0.24.2"
+    "esbuild": "^0.24.2",
+    "parcel": "^2.11.0"
   },
   "scripts": {
-    "dev": "esbuild src/app.js --bundle --sourcemap --outfile=dist/bundled-app-min.js --watch",
+    "dev": "esbuild src/app.js src/swiperapp.js --bundle --sourcemap --outdir=dist --serve=3000 --servedir=.",
+    "dev:parcel": "parcel src/*.js --open",
     "build": "node esbuild.js"
   },
   "browserslist": [
